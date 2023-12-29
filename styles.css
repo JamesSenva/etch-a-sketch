@@ -1,3 +1,7 @@
+html {
+    height: 100%;
+    width: 100%;
+}
 * {
     padding: 0;
     margin: 0;
@@ -30,11 +34,16 @@
 
 /* grid container  */
 .grid {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    /* flex: auto; */
     margin-top: 25px;
     height: 400px;
     width: 400px;
     background-color: rgb(189, 209, 209);
-    border-radius: 5px;
+    border-right: 1px solid #929294;  
+    border-bottom: 1px solid #929294;
 }
 
 .gridSize {
@@ -163,3 +172,18 @@ label {
 span.developer {
     font-weight: 600;
 }
+
+/* single pixel */
+.row {
+    display: flex;
+    flex-direction: column;
+    flex: 1; /* grows this flex item to width/height of its container */
+}
+  
+.col {
+    background-color: #ffffff;
+    border-top: 1px solid #929294;
+    border-left: 1px solid #929294;
+    flex: 1;
+}
+
