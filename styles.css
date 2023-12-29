@@ -41,9 +41,10 @@ html {
     margin-top: 25px;
     height: 400px;
     width: 400px;
-    background-color: rgb(189, 209, 209);
+    background-color: #ffffff;
     border-right: 1px solid #929294;  
     border-bottom: 1px solid #929294;
+    cursor: crosshair;
 }
 
 .gridSize {
@@ -181,7 +182,6 @@ span.developer {
 }
   
 .col {
-    background-color: #ffffff;
     border-top: 1px solid #929294;
     border-left: 1px solid #929294;
     flex: 1;
