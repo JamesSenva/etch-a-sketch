@@ -49,6 +49,9 @@ function handleMousedown() {
 // changes the grid color when mouse is dragged
 function handleMousemove(e) {
     e.target.style.backgroundColor = pen.value;
+    if(rainbowMode.classList.contains('active')){
+        e.target.style.backgroundColor = randColor();
+    }
 }
 
 // when the mouse is released, removes handleMouseup function itself and handleMousemove function which add these functions
@@ -64,4 +67,16 @@ const bg = document.querySelector('#bg');
 // input event updates the background color of gridContainer 
 bg.addEventListener('input', function() {
   gridContainer.style.backgroundColor = bg.value;
+});
+
+
+//------------- Color options: Rainbow Mode
+// function to generate random colors
+const randColor = () =>  {
+    return "#" + Math.floor(Math.random()*16777215).toString(16).padStart(6, '0').toUpperCase();
+};
+
+const rainbowMode = document.querySelector('.rainbow');
+rainbowMode.addEventListener('click', function() {
+    rainbowMode.classList.toggle('active');
 });
