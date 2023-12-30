@@ -187,3 +187,11 @@ span.developer {
     flex: 1;
 }
 
+/* Active feature */
+.active {
+    margin-left: 7px;
+    background-color: #5546e2;
+    color: #ffffff;
+    padding: 5px;
+    border-radius: 5px;
+}
