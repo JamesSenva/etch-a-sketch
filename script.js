@@ -35,15 +35,20 @@ gridSlider.addEventListener('input', createGrid);
 
 //------------- Color options: Pen Color
 const pen = document.querySelector('#pen');
-
+const background = document.querySelectorAll('.row')
+console.log(background)
 // first the mouse button is clicked over gridbox, it calls the handleMousedown function
-gridContainer.addEventListener('mousedown', handleMousedown);
+background.forEach( row => {
+    row.addEventListener('mousedown', handleMousedown);
+})
 
 // handleMousedown function handles two events, mousemove for mouse dragging and mouseup when the mouse button is released
 // also calls their respective callbacks to handle these events
 function handleMousedown() {
-    gridContainer.addEventListener('mousemove', handleMousemove);
-    gridContainer.addEventListener('mouseup', handleMouseup);
+    background.forEach( row => {
+        row.addEventListener('mousemove', handleMousemove);
+        row.addEventListener('mouseup', handleMouseup);
+    })
 }
 
 // changes the grid color when mouse is dragged
@@ -56,15 +61,17 @@ function handleMousemove(e) {
 
 // when the mouse is released, removes handleMouseup function itself and handleMousemove function which add these functions
 function handleMouseup() {
-    gridContainer.removeEventListener('mouseup', handleMouseup);
-    gridContainer.removeEventListener('mousemove', handleMousemove);
+    background.forEach( row => {
+        row.removeEventListener('mousemove', handleMousemove);
+        row.removeEventListener('mouseup', handleMouseup);
+    })
 }
 
 
 //------------- Color options: Background Color
 const bg = document.querySelector('#bg');
 
-// input event updates the background color of gridContainer 
+// input event updates the background color of background 
 bg.addEventListener('input', function() {
   gridContainer.style.backgroundColor = bg.value;
 });
@@ -77,7 +84,7 @@ const randColor = () =>  {
 };
 
 const rainbowMode = document.querySelector('.rainbow');
-const rainbowIcon = document.querySelector('.icon');
+const rainbowIcon = document.querySelector('.looksIcon');
 rainbowMode.addEventListener('click', function() {
     rainbowMode.classList.toggle('active');
     rainbowIcon.classList.toggle('active');
@@ -86,3 +93,19 @@ rainbowMode.addEventListener('click', function() {
 
 
 //------------- Edit options: Eraser
+
+
+//------------- Edit options: Display Grid
+const displayGrid = document.querySelector('.grid_on');
+const columns = document.querySelectorAll('.col');
+const gridIcon = document.querySelector('.gridIcon');
+const gridMode = document.querySelector('.grid_on');
+
+displayGrid.addEventListener('click', function() {
+    gridMode.classList.toggle('active');
+    gridIcon.classList.toggle('active');
+    gridContainer.classList.toggle('gridBorder');
+    columns.forEach( c => {
+        c.classList.toggle('colBorder');
+    })
+});
