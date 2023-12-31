@@ -41,10 +41,13 @@ html {
     flex-wrap: wrap;
     height: 500px;
     width: 500px;
+    cursor: crosshair;
     background-color: #ffffff;
+}
+
+.gridBorder {
     border-right: 1px solid #929294;  
     border-bottom: 1px solid #929294;
-    cursor: crosshair;
 }
 
 .gridSize {
@@ -210,9 +213,12 @@ span.developer {
 }
   
 .col {
+    flex: 1;
+}
+
+.colBorder {
     border-top: 1px solid #929294;
     border-left: 1px solid #929294;
-    flex: 1;
 }
 
 /* Active feature */
