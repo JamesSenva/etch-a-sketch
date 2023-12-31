@@ -77,6 +77,12 @@ const randColor = () =>  {
 };
 
 const rainbowMode = document.querySelector('.rainbow');
+const rainbowIcon = document.querySelector('.icon');
 rainbowMode.addEventListener('click', function() {
     rainbowMode.classList.toggle('active');
+    rainbowIcon.classList.toggle('active');
 });
+
+
+
+//------------- Edit options: Eraser
