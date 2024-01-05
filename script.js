@@ -1,6 +1,10 @@
 // grid container where grid will populate
 const gridContainer = document.querySelector('.grid');
 
+//------------- Edit options: Display Grid
+// store display grid button 
+const gridMode = document.querySelector('.grid_on');
+
 // grid slider
 const gridSlider = document.querySelector('#slider');
 
@@ -30,25 +34,21 @@ createGrid();
 
 // creates grid as the size slider is adjusted
 gridSlider.addEventListener('input', createGrid);
+// gridSlider.addEventListener('input', handleGrid);
 
 
 
 //------------- Color options: Pen Color
 const pen = document.querySelector('#pen');
-const background = document.querySelectorAll('.row')
-console.log(background)
 // first the mouse button is clicked over gridbox, it calls the handleMousedown function
-background.forEach( row => {
-    row.addEventListener('mousedown', handleMousedown);
-})
+gridContainer.addEventListener('mousedown', handleMousedown);
 
 // handleMousedown function handles two events, mousemove for mouse dragging and mouseup when the mouse button is released
 // also calls their respective callbacks to handle these events
 function handleMousedown() {
-    background.forEach( row => {
-        row.addEventListener('mousemove', handleMousemove);
-        row.addEventListener('mouseup', handleMouseup);
-    })
+    gridContainer.addEventListener('mousemove', handleMousemove);
+    gridContainer.addEventListener('mouseup', handleMouseup);
+    event.stopPropagation();
 }
 
 // changes the grid color when mouse is dragged
@@ -57,14 +57,15 @@ function handleMousemove(e) {
     if(rainbowMode.classList.contains('active')){
         e.target.style.backgroundColor = randColor();
     }
+    if(eraserMode.classList.contains('active')){
+        e.target.style.backgroundColor = '';
+    }
 }
 
 // when the mouse is released, removes handleMouseup function itself and handleMousemove function which add these functions
 function handleMouseup() {
-    background.forEach( row => {
-        row.removeEventListener('mousemove', handleMousemove);
-        row.removeEventListener('mouseup', handleMouseup);
-    })
+    gridContainer.removeEventListener('mousemove', handleMousemove);
+    gridContainer.removeEventListener('mouseup', handleMouseup);
 }
 
 
@@ -85,27 +86,80 @@ const randColor = () =>  {
 
 const rainbowMode = document.querySelector('.rainbow');
 const rainbowIcon = document.querySelector('.looksIcon');
-rainbowMode.addEventListener('click', function() {
+rainbowMode.addEventListener('click', handleRainbow);
+
+function handleRainbow() {
     rainbowMode.classList.toggle('active');
     rainbowIcon.classList.toggle('active');
-});
+    eraserMode.classList.remove('active');
+    eraserIcon.classList.remove('active');
+}
 
 
 
 //------------- Edit options: Eraser
+const eraserMode = document.querySelector('.eraser');
+const eraserIcon = document.querySelector('.eraserIcon');
 
+eraserMode.addEventListener('click', handleEraser);
+
+function handleEraser() {
+    eraserMode.classList.toggle('active');
+    eraserIcon.classList.toggle('active');
+    rainbowMode.classList.remove('active');
+    rainbowIcon.classList.remove('active');
+}
 
 //------------- Edit options: Display Grid
-const displayGrid = document.querySelector('.grid_on');
-const columns = document.querySelectorAll('.col');
 const gridIcon = document.querySelector('.gridIcon');
-const gridMode = document.querySelector('.grid_on');
 
-displayGrid.addEventListener('click', function() {
+// add event listener to Display Grid button
+gridMode.addEventListener('click', handleGrid);
+
+// handle the first grid creation when the button is clicked
+function handleGrid() {
+    // counts the columns at the time display grid button is clicked
+    const columns = document.querySelectorAll('.col');
     gridMode.classList.toggle('active');
     gridIcon.classList.toggle('active');
-    gridContainer.classList.toggle('gridBorder');
     columns.forEach( c => {
         c.classList.toggle('colBorder');
     })
-});
+}
+
+// handle slider grid
+// add event listener to slider which check for the grids being created in real time and if the display grid button is active it creates the grid with border as slider is adjusted in real time
+gridSlider.addEventListener('input', handleSliderGrid);
+function handleSliderGrid() {
+    // counts for the grids being created in real time and stores them
+    const columns = document.querySelectorAll('.col');
+
+    // checks if the button has active class and adds/removes the border as the slider is adjusted
+    if(gridMode.classList.contains('active')){
+        columns.forEach( c => {
+            c.classList.add('colBorder');
+        })
+    }
+}
+
+//------------- Edit options: Reset
+const reset = document.querySelector('.reset');
+const resetIcon = document.querySelector('.resetIcon');
+reset.addEventListener('click', handleReset);
+
+function handleReset() {
+    // stores the column at the time of clicking Reset btn
+    const columns = document.querySelectorAll('.col');
+    
+    reset.classList.toggle('active');
+    resetIcon.classList.toggle('active');
+    columns.forEach( c => {
+        c.style.backgroundColor = '';
+    })
+
+    // after 7 mili seconds this removes the active class
+    setTimeout( function() {
+        reset.classList.remove('active');
+        resetIcon.classList.remove('active');
+    }, 700);
+}
